@@ -1,0 +1,36 @@
+* {
+  display: grid;
+  float: left;
+}
+
+#info {
+  grid-area: 1/1/1/1;
+  background-color: "grey";
+}
+
+.button-cluster {
+  margin-bottom: 2 rem;
+}
+
+h2 {
+  height: 1em;
+}
+
+button {
+  width: 4em;
+  display: inline-flex;
+}
+
+#transformations {
+  max-width: 5em;
+  margin: 1em;
+  background-color: gray;
+  opacity: 0.5;
+  z-index: 10;
+}
+
+#feedback {
+  grid-area: 1/2/1/2;
+}
+
+/*# sourceMappingURL=index.css.map */
