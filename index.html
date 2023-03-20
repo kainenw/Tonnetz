@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>TonnetzViz | Online MIDI Visualization</title>
+    <title>Tonnetz</title>
 
     <meta
       name="description"
@@ -22,6 +22,7 @@
       rel="stylesheet"
     />
     <link href="resources/tonnetz-viz/css/style.css" rel="stylesheet" />
+    <link href="resources/css/index.css" rel="stylesheet" />
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -35,7 +36,7 @@
         <span>C major</span>
       </button>
       <div id="transfomations">
-        <h2>Transformations</h2>
+        <h2>Transform- <br> ations</h2>
         <div class="button-cluster">
           <button class="button transformation" id="p" value="P">P</button>
           <button class="button transformation" id="l" value="L">L</button>
@@ -84,6 +85,7 @@
           <button class="button transformation" id="rlrl" value="RLRL">
             RLRL
           </button>
+          <br>
           <button class="button transformation" id="lrlr" value="LRLR">
             LRLR
           </button>
@@ -100,7 +102,7 @@
           </button>
         </div>
       </div>
-      <div>
+      <!-- <div>
         <h6>Explanations</h6>
         <p>
           L : Leading-Tone Exchange <br />
@@ -115,9 +117,9 @@
           The same isn't true for the second order transformations, but it is
           for the third.
         </p>
-      </div>
-      <h2>Current chord</h2>
-      <p id="currentChord"></p>
+      </div> -->
+      <!-- <h2>Current chord</h2>
+      <p id="currentChord"></p> -->
     </div>
     <div
       class="modal fade"
