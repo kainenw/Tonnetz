@@ -1,363 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./resources/css/index.css">
-  <title>Tonnetz</title>
-  <script src="./node_modules/jzz/javascript/JZZ.js" type="text/javascript"></script>
-  <script src="./node_modules/jzz-synth-tiny/javascript/JZZ.synth.Tiny.js" type="text/javascript"></script>
-    <script type="text/javascript" src="resources/tonnetz-viz/js/jquery.min.js"></script>
-  <script type="text/javascript" src="resources/tonnetz-viz/js/jquery.mousewheel.min.js"></script>
-  <script type="text/javascript" src="resources/tonnetz-viz/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="resources/tonnetz-viz/js/jsoneditor.min.js"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <script type="text/javascript" src="resources/tonnetz-viz/js/storage.js"></script>
-  <!-- <script type="text/javascript" src="resources/tonnetz-viz/js/audio.js"></script> -->
-  <script type="text/javascript" src="./resources/js/tonnetz.js"></script>
-  <!-- <script type="text/javascript" src="resources/tonnetz-viz/js/midi.js"></script> -->
-  <script type="text/javascript" src="resources/tonnetz-viz/js/keyboard.js"></script>
+    <title>TonnetzViz | Online MIDI Visualization</title>
 
-  <script type="text/javascript" src="resources/tonnetz-viz/js/colorscheme.js"></script>
-  <script type="text/javascript" src="resources/tonnetz-viz/color-schemes/default.js"></script>
-  <script type="text/javascript" src="resources/tonnetz-viz/color-schemes/greenonblack.js"></script>
-  <script type="text/javascript" src="resources/tonnetz-viz/color-schemes/apollo.js"></script>
-  <script type="text/javascript" src="resources/tonnetz-viz/js/main.js"></script>
+    <meta
+      name="description"
+      content="TonnetzViz is a web-based music visualizer that receives MIDI input and visualizes it in real time using a tonal network called the Tonnetz."
+    />
+    <meta
+      name="keywords"
+      content="tonnetz, online, midi, visualizer, visualization, generator"
+    />
 
-<!-- <script>
-  const handleJZZ = () => {
-  JZZ.synth.Tiny().noteOn(0, 'C', 127);
-};
-const jzz = document.getElementById("jzz");
-jzz.addEventListener('click', handleJZZ);
-</script> -->
-  <script src="./resources/js/main.js" type="module"></script>
-  <link href="resources/tonnetz-viz/css/bootstrap.min.css" rel="stylesheet">
-  <link href="resources/tonnetz-viz/css/font-awesome.min.css" rel="stylesheet">
-  <link href="resources/tonnetz-viz/css/style.css" rel="stylesheet">
-  
-</head>
-<body>
-  <div id="info">
-    <h2>Triads</h2>
-    <button class="button" id="C" value="0">
-      <span>C major</span>
-    </button>
-    <div id="transfomations">
-      <h2>Transformations</h2>
-      <div class="button-cluster">
-        <button class="button transformation" id="p" value="P">P</button>
-        <button class="button transformation" id="l" value="L">L</button>
-        <button class="button transformation" id="r" value="R">R</button>
+    <link href="resources/tonnetz-viz/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="resources/tonnetz-viz/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link href="resources/tonnetz-viz/css/style.css" rel="stylesheet" />
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="info">
+      <h2>Triads</h2>
+      <button class="button" id="C" value="0">
+        <span>C major</span>
+      </button>
+      <div id="transfomations">
+        <h2>Transformations</h2>
+        <div class="button-cluster">
+          <button class="button transformation" id="p" value="P">P</button>
+          <button class="button transformation" id="l" value="L">L</button>
+          <button class="button transformation" id="r" value="R">R</button>
+        </div>
+        <div class="button-cluster">
+          <button class="button transformation" id="pl" value="PL">PL</button>
+          <button class="button transformation" id="pr" value="PR">PR</button>
+          <button class="button transformation" id="lr" value="LR">LR</button>
+          <br />
+          <button class="button transformation" id="lp" value="LP">LP</button>
+          <button class="button transformation" id="rp" value="RP">RP</button>
+          <button class="button transformation" id="rl" value="RL">RL</button>
+        </div>
+        <div class="button-cluster">
+          <button class="button transformation" id="plr" value="PLR">
+            PLR/RLP
+          </button>
+          <button class="button transformation" id="prl" value="PRL">
+            PRL/LRP
+          </button>
+          <button class="button transformation" id="lpr" value="LPR">
+            LPR/RPL
+          </button>
+          <br />
+          <button class="button transformation" id="rlr" value="RLR">
+            RLR
+          </button>
+          <button class="button transformation" id="prp" value="PRP">
+            PRP
+          </button>
+          <button class="button transformation" id="lrl" value="LRL">
+            LPR
+          </button>
+          <button class="button transformation" id="rpr" value="RPR">
+            RPR
+          </button>
+        </div>
+        <div class="button-cluster">
+          <button class="button transformation" id="lprp" value="LPRP">
+            LPRP/RPLP
+          </button>
+          <button class="button transformation" id="lrlp" value="LRLP">
+            LRLP
+          </button>
+          <button class="button transformation" id="rlrl" value="RLRL">
+            RLRL
+          </button>
+          <button class="button transformation" id="lrlr" value="LRLR">
+            LRLR
+          </button>
+          <button class="button transformation" id="prlp" value="PRLP">
+            PRLP = LR
+          </button>
+          <button class="button transformation" id="prpr" value="PRPR">
+            RPRP
+          </button>
+        </div>
+        <div class="button-cluster">
+          <button class="button transformation" id="plrlr" value="PLRLR">
+            PLRLR/RLRLP
+          </button>
+        </div>
       </div>
-      <div class="button-cluster">
-        <button class="button transformation" id="pl" value="PL">PL</button>
-        <button class="button transformation" id="pr" value="PR">PR</button>
-        <button class="button transformation" id="lr" value="LR">LR</button>
-        <br>
-        <button class="button transformation" id="lp" value="LP">LP</button>
-        <button class="button transformation" id="rp" value="RP">RP</button>
-        <button class="button transformation" id="rl" value="RL">RL</button>
+      <div>
+        <h6>Explanations</h6>
+        <p>
+          L : Leading-Tone Exchange <br />
+          P : Parallel <br />
+          R : Relative
+        </p>
+        <p>this is a way of describing the relationships between triads.</p>
+        <h6>Reflexive Properties of These Transformations</h6>
+        <p>
+          notice that the first-order transformations are reflexive, so when you
+          make the same transformation twice, you end up back where you started.
+          The same isn't true for the second order transformations, but it is
+          for the third.
+        </p>
       </div>
-      <div class="button-cluster">
-        <button class="button transformation" id="plr" value="PLR">PLR/RLP</button>
-        <button class="button transformation" id="prl" value="PRL">PRL/LRP</button>
-        <button class="button transformation" id="lpr" value="LPR">LPR/RPL</button>
-        <br>
-        <button class="button transformation" id="rlr" value="RLR">RLR</button>
-        <button class="button transformation" id="prp" value="PRP">PRP</button>
-        <button class="button transformation" id="lrl" value="LRL">LPR</button>
-        <button class="button transformation" id="rpr" value="RPR">RPR</button>
-      </div>
-      <div class="button-cluster">
-        <button class="button transformation" id="lprp" value="LPRP">LPRP/RPLP</button>
-        <button class="button transformation" id="lrlp" value="LRLP">LRLP</button>
-        <button class="button transformation" id="rlrl" value="RLRL">RLRL</button>
-        <button class="button transformation" id="lrlr" value="LRLR">LRLR</button>
-        <button class="button transformation" id="prlp" value="PRLP">PRLP = LR</button>
-        <button class="button transformation" id="prpr" value="PRPR">RPRP</button>
-      </div>
-      <div class="button-cluster">
-        <button class="button transformation" id="plrlr" value="PLRLR">PLRLR/RLRLP</button>
-      </div>
-    </div>
-    <!-- <div>
-      <h6>Explanations</h6>
-      <p>
-        L : Leading-Tone Exchange <br>
-        P : Parallel <br>
-        R : Relative
-      </p>
-      <p>this is a way of describing the relationships between triads.</p>
-      <h6>Reflexive Properties of These Transformations</h6>
-      <p>notice that the first-order transformations are reflexive, so when you make the same transformation twice, you end up back where you started. The same isn't true for the second order transformations, but it is for the third.</p></div>
       <h2>Current chord</h2>
-    <p id="currentChord"></p>
-  </div> -->
-  <div id="feedback" class="container-fullwidth"></div>
-    <div class="tab-content collapse col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2" id="tabs">
-      <div role="tabpanel" class="tab-pane" id="controls">
-        <div class="panel panel-default">
-          <div class="panel-heading">MIDI</div>
-          <div class="panel-body">
-            <div class="form-group">
-              <div class="row">
-                <div class="col-xs-6 col-sm-5 col-md-6 col-sm-offset-1">
-                  <label for="midi-port" class="control-label">MIDI port</label>
-                  <select class="form-control" name="midi-port" id="midi-port"></select>
-                </div>
-
-                <div class="col-xs-6 col-sm-5 col-md-4">
-                  <label for="midi-channel" class="control-label">MIDI channel</label>
-                  <select class="form-control" name="midi-channel" id="midi-channel">
-                    <option value="-1">All</option>
-                    <option value="-10">All except drums (10)</option>
-                    <option value="0">1</option>
-                    <option value="1">2</option>
-                    <option value="2">3</option>
-                    <option value="3">4</option>
-                    <option value="4">5</option>
-                    <option value="5">6</option>
-                    <option value="6">7</option>
-                    <option value="7">8</option>
-                    <option value="8">9</option>
-                    <option value="9">10</option>
-                    <option value="10">11</option>
-                    <option value="11">12</option>
-                    <option value="12">13</option>
-                    <option value="13">14</option>
-                    <option value="14">15</option>
-                    <option value="15">16</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-                  <div class="checkbox">
-                    <label><input name="enable-sustain" id="enable-sustain" type="checkbox" checked> Enable sustain pedal</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">Computer keyboard</div>
-          <div class="panel-body">
-            <div class="form-group">
-              <div class="row">
-                <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-                  <div class="radio">
-                    <label><input type="radio" name="kbd-layout" value="piano" checked>Piano</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                  <div class="keyboard">
-                    <span class="white key"><span>A</span></span>
-                    <span class="black key"><span>W</span></span>
-                    <span class="white key"><span>S</span></span>
-                    <span class="black key"><span>E</span></span>
-                    <span class="white key"><span>D</span></span>
-                    <span class="white key"><span>F</span></span>
-                    <span class="black key"><span>T</span></span>
-                    <span class="white key"><span>G</span></span>
-                    <span class="black key"><span><sup>Y</sup>/<sub>Z</sub></span></span>
-                    <span class="white key"><span>H</span></span>
-                    <span class="black key"><span>U</span></span>
-                    <span class="white key"><span>J</span></span>
-                    <span class="white key"><span>K</span></span>
-                    <span class="black key"><span>O</span></span>
-                    <span class="white key"><span>L</span></span>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-                  <div class="radio">
-                    <label><input type="radio" name="kbd-layout" value="riemann">Tonnetz-like</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2">
-                  <img src="resources/tonnetz-viz/images/keyboard-layout.svg" width="100%">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
-            <button type="button" id="panic" class="btn btn-danger btn-block" data-toggle="tooltip" title="All notes off">
-            <i class="fa fa-fw fa-lg fa-exclamation-circle" aria-hidden="true"></i>
-            Panic</button>
-          </div>
-        </div>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="appearance">
-        <div class="panel panel-default">
-          <div class="panel-heading">Appearance</div>
-          <div class="panel-body">
-            <div class="form-horizontal">
-              <div class="form-group">
-                <label for="color-scheme" class="control-label col-xs-5 col-sm-4 col-md-3">Colour scheme</label>
-                <div class="col-xs-6 col-sm-4">
-                  <select class="form-control" name="color-scheme" id="color-scheme">
-                  </select>
-                  <div class="help-block">
-                      <div>
-                        <i class="fa fa-fw fa-pencil" aria-hidden="true"></i>
-                        <a href="#" id="clone-scheme">Clone<span> and edit</span></a><span>,
-                          <a href="#" id="edit-scheme">edit</a> or <a href="#" id="delete-scheme">delete</a></span> this scheme
-                      </div>
-                      <div>
-                        <i class="fa fa-fw fa-code-fork" aria-hidden="true"></i>
-                        <a href="#" id="scheme-github">Add</a> this scheme on GitHub
-                      </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="layout" class="control-label col-xs-5 col-sm-4 col-md-3">Layout</label>
-                <div class="col-xs-6 col-sm-7 col-md-8">
-                  <label class="radio-inline"><input type="radio" name="layout" value="riemann" checked>Riemannian</label>
-                  <label class="radio-inline"><input type="radio" name="layout" value="sonome">Sonome</label>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-xs-5 col-sm-4 col-md-3">Show/hide</label>
-                <div class="col-xs-6 col-sm-7 col-md-8">
-                  <div class="checkbox">
-                    <label><input name="show-note-names" id="show-note-names" type="checkbox" checked> Tone names</label>
-                  </div>
-                  <div class="checkbox">
-                    <label><input name="show-triad-names" id="show-triad-names" type="checkbox"> Triad names</label>
-                  </div>
-                  <div class="checkbox">
-                    <label><input name="show-unit-cell" id="show-unit-cell" type="checkbox"> Unit cell</label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="ghost-duration" class="control-label col-xs-5 col-sm-4 col-md-3">'Ghost' tone duration</label>
-                <div class="col-xs-6 col-sm-4 col-md-3">
-                  <div class="input-group">
-                    <input type="number" class="form-control" id="ghost-duration" min="0" step="50" value="500">
-                    <div class="input-group-addon">ms</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="alert alert-info" role="alert"><strong>Tip:</strong> Use your mouse wheel to zoom in or out.</div>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="sound">
-        <div class="panel panel-default">
-          <div class="panel-heading">Sound
-          <div class="panel-body">
-            <div class="form-horizontal">
-              <div class="form-group">
-                <label class="control-label col-xs-5 col-sm-4 col-md-3">Enable sound</label>
-                <div class="col-xs-6 col-sm-7 col-md-8">
-                  <div class="checkbox">
-                    <label><input name="sound-on" id="sound-on" type="checkbox"> <i class="fa fa-lg fa-fw fa-volume-off"  style="text-align: left"></i></label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="gain" class="control-label col-xs-5 col-sm-4 col-md-3">Gain</label>
-                <div class="col-xs-6 col-sm-4 col-md-3">
-                  <input type="number" class="form-control" id="gain" min="0" max="1" step="0.1" value="0.3">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="synth-type" class="control-label col-xs-5 col-sm-4 col-md-3">Synth type</label>
-                <div class="col-xs-6 col-sm-4 col-md-3">
-                  <select class="form-control" name="synth-type" id="synth-type">
-                    <option value="sine">Sine</option>
-                    <option value="square">Square</option>
-                    <option value="sawtooth">Sawtooth</option>
-                    <option value="triangle">Triangle</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="tuning" class="control-label col-xs-5 col-sm-4 col-md-3">Tuning</label>
-                <div class="col-xs-6 col-sm-4 col-md-3">
-                  <select class="form-control" name="tuning" id="tuning">
-                    <option value="et">Equal Temperament</option>
-                    <option value="pyth">Pythagorean tuning</option>
-                    <option value="js">Just Intonation</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="base_tuning" class="control-label col-xs-5 col-sm-4 col-md-3">Base note of the tuning</label>
-                <div class="col-xs-6 col-sm-4 col-md-3">
-                  <select class="form-control" name="base_tuning" id="base_tuning">
-                    <option value="36">C</option>
-                    <option value="37">C#</option>
-                    <option value="38">D</option>
-                    <option value="39">D#</option>
-                    <option value="40">E</option>
-                    <option value="41">F</option>
-                    <option value="42">F#</option>
-                    <option value="43">G</option>
-                    <option value="44">G#</option>
-                    <option value="45">A</option>
-                    <option value="46">A#</option>
-                    <option value="47">B</option>
-                  </select>
-                </div>
-              </div>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-      
+      <p id="currentChord"></p>
     </div>
-  </div>
-
-  <div class="container" id="messages-container">
-    <div class="row">
-      <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2" id="messages">
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="scheme-editor" tabindex="-1" role="dialog" aria-labelledby="scheme-editor-label"
-    data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="scheme-editor-label">Edit colour scheme</h4>
-        </div>
-        <div class="modal-body">
-          <div id="scheme-editor-holder">
+    <div
+      class="modal fade"
+      id="scheme-editor"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="scheme-editor-label"
+      data-backdrop="static"
+      data-keyboard="false"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="scheme-editor-label">
+              Edit colour scheme
+            </h4>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" id="save-scheme">Save</button>
+          <div class="modal-body">
+            <div id="scheme-editor-holder"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Cancel
+            </button>
+            <button type="button" class="btn btn-primary" id="save-scheme">
+              Save
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div id="tonnetz">
-    <div id="note-labels" class="labels"></div>
-    <div id="triad-labels" class="labels"></div>
-    <canvas id="canvas">
-    </canvas>
-  </div>
-</body>
+    <div id="tonnetz">
+      <div id="note-labels" class="labels"></div>
+      <div id="triad-labels" class="labels"></div>
+      <canvas id="canvas"> </canvas>
+    </div>
+    <script
+      src="./node_modules/jzz/javascript/JZZ.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="./node_modules/jzz-synth-tiny/javascript/JZZ.synth.Tiny.js"
+      type="text/javascript"
+    ></script>
+    <script type="text/javascript" src="resources/js/tonnetz.js"></script>
+    <script type="module" src="resources/js/interval.js"></script>
+    <script type="module" src="resources/js/main.js"></script>
 
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/js/jquery.mousewheel.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/js/jquery.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/js/keyboard.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/js/bootstrap.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/js/jsoneditor.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/js/storage.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/js/audio.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/js/midi.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/js/colorscheme.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/color-schemes/default.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/color-schemes/greenonblack.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/color-schemes/apollo.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="resources/tonnetz-viz/js/main.js"
+    ></script>
+  </body>
 </html>

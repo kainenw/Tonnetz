@@ -4,7 +4,8 @@ import playTriad, { buildMaj } from "./triad.js"
 
 let triad = { root: 48, third: 52, fifth: 55, isMajor: true }
 
-const handleClickC = ( event )  => {
+const handleClickC = (event) => {
+  console.log("hi")
 	const rootNum = getNoteNum(0, 4)
 	triad = buildMaj(rootNum);
 	playTriad(triad)
