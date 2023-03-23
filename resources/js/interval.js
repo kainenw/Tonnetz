@@ -1,5 +1,5 @@
-/* export const int = { //interval
-    uni: 0, //unison
+/* export const interval = {
+    un: 0, //unison
     m2: 1,
     M2: 2,
     m3: 3,

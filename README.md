@@ -4,7 +4,7 @@ This is a web app to visualize chords and chord changes using the "https://en.wi
 
 ## Libraries and Repositories Used
 
-### Pitch.js
+### hertz.js
 
 For this project, I built a way to reference notes using integers, retrieve their frequencies by their note number, and retrieve their note letter by note number.
 
