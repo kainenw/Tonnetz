@@ -12,10 +12,18 @@
       content="TonnetzViz is a web-based music visualizer that receives MIDI input and visualizes it in real time using a tonal network called the Tonnetz."
     />
     <meta
-      name="keywords"
-      content="tonnetz, online, midi, visualizer, visualization, generator"
+    name="keywords"
+    content="tonnetz, online, midi, visualizer, visualization, generator"
     />
-
+    <script
+      src="./node_modules/jzz/javascript/JZZ.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="./node_modules/jzz-synth-tiny/javascript/JZZ.synth.Tiny.js"
+      type="text/javascript"
+    ></script>
+    
     <link href="resources/tonnetz-viz/css/bootstrap.min.css" rel="stylesheet" />
     <link
       href="resources/tonnetz-viz/css/font-awesome.min.css"
@@ -36,7 +44,7 @@
         <span>C major</span>
       </button>
       <div id="transfomations">
-        <h2>Transform- <br> ations</h2>
+        <h2>Transformations</h2>
         <div class="button-cluster">
           <button class="button transformation" id="p" value="P">P</button>
           <button class="button transformation" id="l" value="L">L</button>
@@ -165,14 +173,6 @@
       <div id="triad-labels" class="labels"></div>
       <canvas id="canvas"> </canvas>
     </div>
-    <script
-      src="./node_modules/jzz/javascript/JZZ.js"
-      type="text/javascript"
-    ></script>
-    <script
-      src="./node_modules/jzz-synth-tiny/javascript/JZZ.synth.Tiny.js"
-      type="text/javascript"
-    ></script>
     <script type="text/javascript" src="resources/js/tonnetz.js"></script>
     <script type="module" src="resources/js/interval.js"></script>
     <script type="module" src="resources/js/main.js"></script>
