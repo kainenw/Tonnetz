@@ -1,4 +1,4 @@
-module.exports = {
+/* module.exports = {
     mode: 'development',
     entry: './resources/js/main.js',
     module: {
@@ -11,4 +11,4 @@ module.exports = {
       publicPath: 'C:\Users\Me\My_Drive\Tonnetz\dist\main.js',
       port: 8080
   }
-}
+} */
