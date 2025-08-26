@@ -11,6 +11,7 @@ $(function(){
   colorscheme.init('default');
   audio.init();
   tonnetz.init();
+  canvas.addEventListener('click', handleCanvasClick);
   midi.init();
   keyboard.init('piano');
 
@@ -115,3 +116,12 @@ function showAlert(text, type) {
 function showWarning(text) { showAlert(text, 'warning'); }
 function showError(text) { showAlert(text, 'danger'); }
 function showSuccess(text) { showAlert(text, 'success'); }
+
+function handleCanvasClick(event) {
+  if (typeof detectTriangle === 'function' && detectTriangle(event)) {
+    return;
+  }
+  if (typeof detectNote === 'function') {
+    detectNote(event);
+  }
+}
