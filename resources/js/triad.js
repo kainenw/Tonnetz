@@ -40,6 +40,15 @@ export const buildMin = (root) => {
   return triad;
 };
 
+export const playNote = (pitch) => {
+  tonnetz.allNotesOff(16);
+  const pitchClass = pitch % 12;
+  tonnetz.noteOn(16, pitchClass);
+  const synth = JZZ.synth.Tiny();
+  synth.noteOn(0, pitch, 127).wait(500).noteOff(0, pitch);
+  setTimeout(() => tonnetz.noteOff(16, pitchClass), 500);
+};
+
 const playTriad = ({ root, third, fifth }) => {
   tonnetz.allNotesOff(16);
   tonnetz.noteOn(16, root % 12);
