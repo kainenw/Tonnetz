@@ -452,7 +452,11 @@ var tonnetz = (function() {
       node.minorTriadLabel = createLabel(name.toLowerCase(), x - xUnit/6, y - u/2);
     }
     node.majorTriadLabel.className = 'major';
+    node.majorTriadLabel.setAttribute('data-tone', tone);
+    node.majorTriadLabel.setAttribute('data-quality', 'major');
     node.minorTriadLabel.className = 'minor';
+    node.minorTriadLabel.setAttribute('data-tone', tone);
+    node.minorTriadLabel.setAttribute('data-quality', 'minor');
     triadLabels.appendChild(node.majorTriadLabel);
     triadLabels.appendChild(node.minorTriadLabel);
 
