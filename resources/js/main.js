@@ -1,4 +1,4 @@
-import { getNoteNum, getNoteLetter } from "./hertz.js";
+import { getNoteNum } from "./hertz.js";
 import transformation from "./transformation.js";
 import { buildMaj, buildMin, playTriad } from "./triad.js";
 

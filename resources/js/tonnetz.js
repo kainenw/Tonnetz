@@ -436,7 +436,8 @@ var tonnetz = (function() {
     // Create the note label.
     node.label = createLabel(name, x, y);
     // added by KTW
-    node.label.className = name
+    node.label.className = name;
+    node.label.setAttribute('data-pitch', tone);
   
 
     noteLabels.appendChild(node.label);
