@@ -38,19 +38,22 @@ C.addEventListener("click", handleClickC);
 
 // After the Tonnetz has been initialized, add listeners to the triad labels.
 window.addEventListener("load", () => {
-  const labels = document.querySelectorAll(".major, .minor");
-  labels.forEach((label) => {
-    label.addEventListener("click", (event) => {
-      const tone = parseInt(event.target.dataset.tone, 10);
-      const quality = event.target.dataset.quality;
-      const root = getNoteNum(tone, 4);
-      triad = quality === "major" ? buildMaj(root) : buildMin(root);
-      playTriad(triad);
+  const container = document.getElementById("triad-labels");
 
-      document
-        .querySelectorAll(".major.state-ON, .minor.state-ON")
-        .forEach((el) => el.classList.remove("state-ON"));
-      event.target.classList.toggle("state-ON");
-    });
+  // Use event delegation so that labels added during a rebuild remain clickable.
+  container.addEventListener("click", (event) => {
+    const target = event.target.closest(".major, .minor");
+    if (!target) return;
+
+    const tone = parseInt(target.dataset.tone, 10);
+    const quality = target.dataset.quality;
+    const root = getNoteNum(tone, 4);
+    triad = quality === "major" ? buildMaj(root) : buildMin(root);
+    playTriad(triad);
+
+    document
+      .querySelectorAll(".major.state-ON, .minor.state-ON")
+      .forEach((el) => el.classList.remove("state-ON"));
+    target.classList.toggle("state-ON");
   });
 });

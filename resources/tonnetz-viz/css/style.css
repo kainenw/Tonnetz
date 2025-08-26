@@ -146,6 +146,11 @@ a:link.external:after {
   margin-top: -0.4em;
 }
 
+.labels .major,
+.labels .minor {
+  cursor: pointer;
+}
+
 .navbar-inverse .navbar-brand:focus {
   background-color: transparent;
   color: #999999;
