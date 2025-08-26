@@ -64,3 +64,8 @@ export const playTriad = ({ root, third, fifth }) => {
   generateTone(third);
   generateTone(fifth); */
 };
+
+// Expose playTriad globally so non-module scripts can trigger triads.
+// This allows functions such as `detectTriangle` to invoke the same
+// playback routine used elsewhere in the application.
+window.playTriad = playTriad;

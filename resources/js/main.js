@@ -4,6 +4,13 @@ import { buildMaj, buildMin, playTriad } from "./triad.js";
 
 let triad = { root: 48, third: 52, fifth: 55, isMajor: true };
 
+// Allow other scripts (such as the Tonnetz visualizer) to update or
+// retrieve the current triad selection.
+window.setCurrentTriad = (t) => {
+  triad = t;
+};
+window.getCurrentTriad = () => triad;
+
 const handleClickC = (event) => {
   console.log("hi");
   const rootNum = getNoteNum(0, 4);

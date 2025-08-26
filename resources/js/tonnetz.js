@@ -415,6 +415,78 @@ var tonnetz = (function() {
     return result;
   };
 
+  // Helper to determine if a point lies within a triangle defined by
+  // three vertices. Uses barycentric technique based on sign of areas.
+  var pointInTriangle = function(pt, v1, v2, v3) {
+    var sign = function(p1, p2, p3) {
+      return (p1.x - p3.x) * (p2.y - p3.y) -
+             (p2.x - p3.x) * (p1.y - p3.y);
+    };
+    var b1 = sign(pt, v1, v2) < 0;
+    var b2 = sign(pt, v2, v3) < 0;
+    var b3 = sign(pt, v3, v1) < 0;
+    return ((b1 === b2) && (b2 === b3));
+  };
+
+  // Detect whether a major or minor triangle was clicked and, if so,
+  // play the corresponding triad.
+  module.detectTriangle = function(event) {
+    if (!canvas) return false;
+
+    var rect = canvas.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+
+    for (var tone = 0; tone < 12; tone++) {
+      var nodes = toneGrid[tone];
+      for (var i = 0; i < nodes.length; i++) {
+        var node = nodes[i];
+        var base = { x: node.x, y: node.y };
+
+        var topTone = (tone + 7) % 12;
+        var leftTone = (tone + 3) % 12;
+        var rightTone = (tone + 4) % 12;
+
+        var top = getNeighborXYDiff(tone, topTone);
+        var left = getNeighborXYDiff(tone, leftTone);
+        var right = getNeighborXYDiff(tone, rightTone);
+
+        var pTop = { x: base.x + top.x, y: base.y + top.y };
+        var pLeft = { x: base.x + left.x, y: base.y + left.y };
+        var pRight = { x: base.x + right.x, y: base.y + right.y };
+        var pt = { x: x, y: y };
+
+        // Check minor triangle (base, top, left)
+        if (pointInTriangle(pt, base, pTop, pLeft)) {
+          var triadMin = {
+            root: 48 + tone,
+            third: 48 + leftTone,
+            fifth: 48 + topTone,
+            isMajor: false
+          };
+          if (window.setCurrentTriad) window.setCurrentTriad(triadMin);
+          if (typeof window.playTriad === 'function') window.playTriad(triadMin);
+          return true;
+        }
+
+        // Check major triangle (base, top, right)
+        if (pointInTriangle(pt, base, pTop, pRight)) {
+          var triadMaj = {
+            root: 48 + tone,
+            third: 48 + rightTone,
+            fifth: 48 + topTone,
+            isMajor: true
+          };
+          if (window.setCurrentTriad) window.setCurrentTriad(triadMaj);
+          if (typeof window.playTriad === 'function') window.playTriad(triadMaj);
+          return true;
+        }
+      }
+    }
+
+    return false;
+  };
+
   var createLabel = function(text, x, y) {
     var label = document.createElement('div');
     var inner = document.createElement('div');
@@ -539,3 +611,7 @@ var tonnetz = (function() {
 
   return module;
 })();
+
+// Make the triangle detector available to non-module scripts such as
+// the event handler defined in `tonnetz-viz/js/main.js`.
+window.detectTriangle = tonnetz.detectTriangle;
