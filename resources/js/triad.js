@@ -49,7 +49,7 @@ export const playNote = (pitch) => {
   setTimeout(() => tonnetz.noteOff(16, pitchClass), 500);
 };
 
-const playTriad = ({ root, third, fifth }) => {
+export const playTriad = ({ root, third, fifth }) => {
   tonnetz.allNotesOff(16);
   tonnetz.noteOn(16, root % 12);
   tonnetz.noteOn(16, third % 12);
@@ -64,5 +64,3 @@ const playTriad = ({ root, third, fifth }) => {
   generateTone(third);
   generateTone(fifth); */
 };
-
-export default playTriad;

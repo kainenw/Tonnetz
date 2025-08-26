@@ -1,6 +1,6 @@
 import { getNoteNum } from "./hertz.js";
 import transformation from "./transformation.js";
-import playTriad, { buildMaj, playNote } from "./triad.js";
+import { buildMaj, buildMin, playTriad } from "./triad.js";
 
 let triad = { root: 48, third: 52, fifth: 55, isMajor: true };
 
@@ -29,15 +29,21 @@ const C = document.getElementById("C");
 
 C.addEventListener("click", handleClickC);
 
-window.addEventListener('load', () => {
-  const labels = document.getElementById('note-labels').children;
-  Array.from(labels).forEach(label => {
-    label.addEventListener('click', () => {
-      const pitchClass = Number(label.getAttribute('data-pitch'));
-      const note = getNoteNum(pitchClass, 4);
-      playNote(note);
-      label.classList.add('state-ON');
-      setTimeout(() => label.classList.remove('state-ON'), 500);
+// After the Tonnetz has been initialized, add listeners to the triad labels.
+window.addEventListener("load", () => {
+  const labels = document.querySelectorAll(".major, .minor");
+  labels.forEach((label) => {
+    label.addEventListener("click", (event) => {
+      const tone = parseInt(event.target.dataset.tone, 10);
+      const quality = event.target.dataset.quality;
+      const root = getNoteNum(tone, 4);
+      triad = quality === "major" ? buildMaj(root) : buildMin(root);
+      playTriad(triad);
+
+      document
+        .querySelectorAll(".major.state-ON, .minor.state-ON")
+        .forEach((el) => el.classList.remove("state-ON"));
+      event.target.classList.toggle("state-ON");
     });
   });
 });
