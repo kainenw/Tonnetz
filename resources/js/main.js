@@ -42,25 +42,18 @@ window.addEventListener("load", () => {
 
   // Use event delegation so that labels added during a rebuild remain clickable.
   container.addEventListener("click", (event) => {
-    let el = event.target;
+    const target = event.target.closest(".major, .minor");
+    if (!target) return;
 
-    // Text nodes don't support closest(); move to their parent element.
-    if (el.nodeType === Node.TEXT_NODE) {
-      el = el.parentElement;
-    }
-
-    const label = el.closest(".major, .minor");
-    if (!label) return;
-
-    const tone = Number(label.dataset.tone);
-    const quality = label.dataset.quality;
+    const tone = parseInt(target.dataset.tone, 10);
+    const quality = target.dataset.quality;
     const root = getNoteNum(tone, 4);
     triad = quality === "major" ? buildMaj(root) : buildMin(root);
     playTriad(triad);
 
     document
       .querySelectorAll(".major.state-ON, .minor.state-ON")
-      .forEach((n) => n.classList.remove("state-ON"));
-    label.classList.add("state-ON");
+      .forEach((el) => el.classList.remove("state-ON"));
+    target.classList.toggle("state-ON");
   });
 });
